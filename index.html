@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>XTV Studio - Streaming Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fuentes e íconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+        :root {
+            --primary: #3a0ca3;
+            --secondary: #f72585;
+            --accent: #4cc9f0;
+            --gradient-start: #4361ee;
+            --gradient-end: #7209b7;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --card-bg: #ffffff;
+            --success: #06d6a0;
+            --warning: #ffd166;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ---------- Estilos Extra para Personalización ---------- */
+
+        /* Logo: se hace más pequeña la palabra “Studio” */
+        .xtv-logo-small {
+            font-size: 0.75em;
+            margin-left: -10px;
+            /* para alinear entre la X y la T */
+        }
+
+        /* Botón "Obtener Ahora" para navbar */
+        .boton-obtener {
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Botón de compra en la sección de precios */
+        .boton-compra {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* Icono de WhatsApp fijo en pantalla */
+        .whatsapp-fixed {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        /* ---------- Fin Estilos Extra ---------- */
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-scrolled {
+            padding: 0.7rem 0;
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .navbar-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.8rem;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .navbar-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .navbar-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .navbar-link:hover::after {
+            width: 100%;
+        }
+
+        .navbar-cta {
+            text-decoration: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 650px;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(58, 12, 163, 0.8), rgba(247, 37, 133, 0.8)), url('/api/placeholder/1920/1080') center/cover;
+            color: white;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(58, 12, 163, 0.8), rgba(247, 37, 133, 0.8));
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .hero-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+
+        .hero-devices {
+            position: absolute;
+            right: -100px;
+            bottom: -50px;
+            width: 600px;
+            height: 600px;
+            background-image: url('/api/placeholder/900/900');
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: 1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+            box-shadow: 0 10px 25px rgba(247, 37, 133, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(247, 37, 133, 0.5);
+        }
+
+        .btn-outline {
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            background: transparent;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Features Section */
+        .section {
+            padding: 8rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .packs .section-subtitle {
+            color: #f72585;
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .packs .section-title {
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-description {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .packs .section-description {
+            color: white;
+            font-weight: 500;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            z-index: 2;
+        }
+
+        .feature-content {
+            padding: 2.5rem;
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-size: 1.8rem;
+            border-radius: 18px;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .feature-text {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            padding: 0.5rem 0;
+        }
+
+        .feature-check {
+            color: var(--success);
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        /* Packs Section */
+        .packs {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .packs::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/api/placeholder/200/200');
+            background-size: 100px 100px;
+            opacity: 0.1;
+        }
+
+        .pack-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .pack-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pack-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .pack-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pack-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .pack-description {
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        /* Devices Section */
+        .devices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .device-item {
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .device-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .device-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .device-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .multiscreen {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 4rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        }
+
+        .multiscreen-icons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .multiscreen-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .multiscreen-text {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background-color: var(--light);
+            background-image: linear-gradient(135deg, #f8f9fa 25%, #f1f3f5 25%, #f1f3f5 50%, #f8f9fa 50%, #f8f9fa 75%, #f1f3f5 75%, #f1f3f5 100%);
+            background-size: 20px 20px;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .pricing-header {
+            background: linear-gradient(135deg, var(--primary), var(--gradient-end));
+            color: white;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 20% 35%, rgba(255, 255, 255, 0.2) 0%, transparent 30%);
+        }
+
+        .pricing-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .pricing-subtitle {
+            font-weight: 300;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .pricing-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .pricing-period {
+            font-weight: 300;
+            opacity: 0.8;
+            position: relative;
+        }
+
+        .pricing-content {
+            padding: 2.5rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        .pricing-feature i {
+            color: var(--success);
+            margin-right: 1rem;
+        }
+
+        .promo-badge {
+            background: var(--warning);
+            color: var(--dark);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        /* How to Get Started */
+        .steps {
+            position: relative;
+            z-index: 1;
+        }
+
+        .steps-container {
+            position: relative;
+            max-width: 800px;
+            margin: 4rem auto 0;
+        }
+
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: calc(100% - 80px);
+            background: linear-gradient(to bottom, var(--primary), var(--gradient-end));
+            left: 25px;
+            top: 40px;
+            border-radius: 4px;
+        }
+
+        .step {
+            display: flex;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            margin-right: 2rem;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(58, 12, 163, 0.3);
+            z-index: 2;
+        }
+
+        .step-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            flex-grow: 1;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover .step-content {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .step-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .step-description {
+            color: #555;
+            line-height: 1.7;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, var(--primary), var(--gradient-end));
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -150px;
+            right: -100px;
+        }
+
+        .contact::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            bottom: -100px;
+            left: -50px;
+        }
+
+        .contact-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-text {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: white;
+            color: var(--primary);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-button i {
+            font-size: 1.3rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.8rem;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, white, #bbb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-block h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .footer-block h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--secondary);
+        }
+
+        .footer-block p {
+            color: #aaa;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Animaciones */
+        .animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .animate.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Floating effect */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .navbar-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.8rem;
+            }
+
+            .hero-devices {
+                right: -300px;
+                opacity: 0.5;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 5rem 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .hero-devices {
+                display: none;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .hero-buttons a {
+                width: 100%;
+                text-align: center;
+            }
+
+            .steps-container::before {
+                left: 24px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 6rem 0;
+                height: auto;
+                min-height: auto;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            /* Ajuste para el botón "Obtener Ahora" en móvil */
+            .boton-obtener {
+                font-size: 0.9rem;
+                padding: 5px 10px;
+                width: auto;
+            }
+
+            /* Reducir el tamaño del ícono WhatsApp para móviles */
+            .whatsapp-fixed i {
+                font-size: 40px;
+            }
+        }
+
+        < !-- Iconos de Font Awesome --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">< !-- Swiper CSS --><link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"><style> :root {
+            --primary: #3a0ca3;
+            --secondary: #f72585;
+            --accent: #4cc9f0;
+            --gradient-start: #4361ee;
+            --gradient-end: #7209b7;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --card-bg: #ffffff;
+            --success: #06d6a0;
+            --warning: #ffd166;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Sección de Testimonios */
+        .testimonials {
+            background-color: #f1f3f5;
+            padding: 8rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonials::before,
+        .testimonials::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(58, 12, 163, 0.1), rgba(247, 37, 133, 0.1));
+            z-index: 1;
+        }
+
+        .testimonials::before {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            right: -100px;
+        }
+
+        .testimonials::after {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            left: -50px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-subtitle {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-description {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        /* Estilos del carrusel con SwiperJS */
+        .swiper-container {
+            padding-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .swiper-wrapper {
+            display: flex;
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+        }
+
+        .testimonial-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            width: 300px;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Reubicar la cita para que no tape las estrellas */
+        .testimonial-quote {
+            font-size: 2.5rem;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: rgba(58, 12, 163, 0.1);
+            z-index: 1;
+        }
+
+        /* Asegurar que la sección de rating tenga mayor prioridad */
+        .testimonial-rating {
+            display: flex;
+            margin-top: 20px;
+            margin-bottom: 1.5rem;
+            color: #ffc107;
+            position: relative;
+            z-index: 2;
+        }
+
+
+        .testimonial-rating i {
+            margin-right: 0.3rem;
+        }
+
+        .testimonial-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            z-index: 2;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            color: #555;
+            font-style: italic;
+            position: relative;
+            z-index: 2;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .testimonial-info h4 {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: var(--dark);
+        }
+
+        .testimonial-info p {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        /* Controles de navegación de Swiper */
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: var(--primary);
+        }
+
+        .swiper-pagination-bullet-active {
+            background: var(--secondary);
+        }
+
+        /* Animate */
+        .animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .animate.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .testimonials {
+                padding: 5rem 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .testimonial-card {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .testimonial-card {
+                padding: 1.5rem;
+            }
+        }
+
+        .testimonials-cta {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .testimonials-cta .boton-obtener {
+    font-size: 1.5rem; /* Aumenta el tamaño de la fuente */
+    padding: 15px 30px; /* Amplía el espacio interno del botón */
+}
+
+        
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-logo">
+                <i class="fas fa-tv"></i> XTV <span class="xtv-logo-small">Studio</span>
+            </a>
+            <div class="navbar-links">
+                <a href="#features" class="navbar-link">Características</a>
+                <a href="#packs" class="navbar-link">Packs</a>
+                <a href="#devices" class="navbar-link">Dispositivos</a>
+                <a href="#pricing" class="navbar-link">Precios</a>
+                <a href="#testimonials" class="navbar-link">Nuestros Clientes</a>
+
+            </div>
+            <a href="#pricing" class="navbar-cta boton-obtener">Obtener Ahora</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">La nueva experiencia de TV</div>
+                <h1 class="hero-title">TV en vivo y contenido exclusivo en una sola aplicación</h1>
+                <p class="hero-text">XTV Studio te ofrece una experiencia de streaming simple, fluida y de calidad. Disfruta de canales en vivo, películas y series sin contratos ni complicaciones.</p>
+                <div class="hero-buttons">
+                    <a href="#pricing" class="btn btn-primary">
+                        <i class="fas fa-play"></i> Comenzar Ahora
+                    </a>
+                    <a href="#features" class="btn btn-outline">
+                        <i class="fas fa-info-circle"></i> Conocer Más
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-devices"></div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">CARACTERÍSTICAS</div>
+                <h2 class="section-title">¿Qué ofrece la aplicación?</h2>
+                <p class="section-description">Una plataforma completa con todo el contenido que buscas, desde canales en vivo hasta películas y series para toda la familia.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card animate">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-tv"></i>
+                        </div>
+                        <h3 class="feature-title">Canales en Vivo</h3>
+                        <p class="feature-text">Accede a una amplia selección de canales nacionales e internacionales en tiempo real.</p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle feature-check"></i>
+                                Canales de Buenos Aires
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle feature-check"></i>
+                                Canales del interior del país
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle feature-check"></i>
+                                Canales internacionales de cable
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-card animate">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <h3 class="feature-title">Contenido On Demand</h3>
+                        <p class="feature-text">Disfruta de películas y series cuando quieras, sin horarios ni restricciones.</p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle feature-check"></i>
+                                Calidad HD y Full HD
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle feature-check"></i>
+                                Biblioteca renovada semanalmente
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle feature-check"></i>
+                                Sin publicidades
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-card animate">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Multiplataforma</h3>
+                        <p class="feature-text">Usa la aplicación en todos tus dispositivos y comparte con la familia.</p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle feature-check"></i>
+                                Hasta 3 dispositivos simultáneos
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle feature-check"></i>
+                                Perfecta sincronización
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle feature-check"></i>
+                                Control parental incluido
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packs Section -->
+    <section class="section packs" id="packs">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">PACKS TEMÁTICOS</div>
+                <h2 class="section-title">Todo el contenido que necesitás</h2>
+                <p class="section-description">Nuestros packs temáticos incluidos te permiten acceder a una experiencia completa de entretenimiento para toda la familia.</p>
+            </div>
+            <div class="pack-cards">
+                <div class="pack-card animate">
+                    <div class="pack-icon">
+                        <i class="fas fa-futbol"></i>
+                    </div>
+                    <h3 class="pack-title">Pack Fútbol</h3>
+                    <p class="pack-description">Todos los partidos importantes, ligas nacionales e internacionales, copas y torneos en un solo lugar.</p>
+                </div>
+                <div class="pack-card animate">
+                    <div class="pack-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <h3 class="pack-title">Pack HBO</h3>
+                    <p class="pack-description">Accede a contenido premium con las mejores películas y series exclusivas del catálogo de HBO.</p>
+                </div>
+                <div class="pack-card animate">
+                    <div class="pack-icon">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <h3 class="pack-title">Pack Kids</h3>
+                    <p class="pack-description">Contenido infantil seguro y educativo para los más pequeños de la casa con control parental.</p>
+                </div>
+                <div class="pack-card animate">
+                    <div class="pack-icon">
+                        <i class="fas fa-mask"></i>
+                    </div>
+                    <h3 class="pack-title">Pack Adultos</h3>
+                    <p class="pack-description">Contenido exclusivo para adultos con sistema de control parental para mayor seguridad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Devices Section -->
+    <section class="section" id="devices">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">DISPOSITIVOS</div>
+                <h2 class="section-title">Disponible en todos tus dispositivos</h2>
+                <p class="section-description">XTV Studio es compatible con una amplia variedad de dispositivos para que puedas disfrutar del contenido donde quieras.</p>
+            </div>
+            <div class="devices-grid">
+                <div class="device-item animate">
+                    <div class="device-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="device-name">Celulares Android</div>
+                </div>
+                <div class="device-item animate">
+                    <div class="device-icon">
+                        <i class="fas fa-tablet-alt"></i>
+                    </div>
+                    <div class="device-name">Tablets</div>
+                </div>
+                <div class="device-item animate">
+                    <div class="device-icon">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <div class="device-name">TV con Android</div>
+                </div>
+                <div class="device-item animate">
+                    <div class="device-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="device-name">TV Box</div>
+                </div>
+                <div class="device-item animate">
+                    <div class="device-icon">
+                        <i class="fas fa-hdd"></i>
+                    </div>
+                    <div class="device-name">Convertidores de TV</div>
+                </div>
+            </div>
+            <div class="multiscreen animate">
+                <div class="multiscreen-icons">
+                    <div class="multiscreen-icon">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <div class="multiscreen-icon">
+                        <i class="fas fa-tablet-alt"></i>
+                    </div>
+                    <div class="multiscreen-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                </div>
+                <div class="multiscreen-text">Usa hasta 3 dispositivos en simultáneo</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">PRECIO</div>
+                <h2 class="section-title">Simple y transparente</h2>
+                <p class="section-description">Sin contratos ni compromisos. Pagás solo cuando querés usarla.</p>
+            </div>
+            <div class="pricing-cards">
+                <div class="pricing-card animate">
+                    <div class="pricing-header">
+                        <div class="promo-badge">30% OFF</div>
+                        <h3 class="pricing-title">Plan Premium</h3>
+                        <p class="pricing-subtitle">Todo incluido</p>
+                        <div class="pricing-amount">$4.800</div>
+                        <div class="pricing-period">por mes</div>
+                    </div>
+                    <div class="pricing-content">
+                        <ul class="pricing-features">
+                            <li class="pricing-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Todos los canales en vivo</span>
+                            </li>
+                            <li class="pricing-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Contenido On Demand</span>
+                            </li>
+                            <li class="pricing-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Todos los packs temáticos</span>
+                            </li>
+                            <li class="pricing-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>3 dispositivos simultáneos</span>
+                            </li>
+                            <li class="pricing-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Calidad HD y Full HD</span>
+                            </li>
+                            <li class="pricing-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Soporte técnico incluido</span>
+                            </li>
+                        </ul>
+                        <a href="https://mpago.la/1PMRRXx" class="boton-compra">
+                            <i class="fas fa-shopping-cart"></i> Obtener Ahora
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Get Started -->
+    <section class="section steps" id="steps">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">PRIMEROS PASOS</div>
+                <h2 class="section-title">¿Cómo empezar?</h2>
+                <p class="section-description">Comenzar a disfrutar XTV Studio es muy fácil. Sigue estos simples pasos:</p>
+            </div>
+            <div class="steps-container">
+                <div class="step animate">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Descarga la aplicación</h3>
+                        <p class="step-description">Descargá la aplicación desde nuestro enlace oficial para tu dispositivo.</p>
+                    </div>
+                </div>
+                <div class="step animate">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Realiza el pago</h3>
+                        <p class="step-description">
+                            Transferencia bancaria a:<br>
+                            Titular: Cristian Emiliano Gómez<br>
+                            CBU: 0000003100147117623527<br>
+                            Alias: pagoxtv
+                        </p>
+                    </div>
+                </div>
+                <div class="step animate">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Recibe tu usuario</h3>
+                        <p class="step-description">Una vez confirmado el pago, recibirás tu usuario por WhatsApp.</p>
+                    </div>
+                </div>
+                <div class="step animate">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3 class="step-title">¡A disfrutar!</h3>
+                        <p class="step-description">Inicia sesión y comienza a disfrutar de todo el contenido.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="contact-content">
+                <h2 class="contact-title">¿Necesitás ayuda?</h2>
+                <p class="contact-text">Nuestro equipo de soporte está listo para ayudarte con cualquier consulta o problema técnico.</p>
+                <a href="https://wa.me/5491124057454" class="contact-button">
+                    <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- Sección de Testimonios -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">OPINIONES</div>
+                <h2 class="section-title">Lo que dicen nuestros usuarios</h2>
+                <p class="section-description">Miles de usuarios ya disfrutan de XTV Studio. Conocé sus experiencias y descubrí por qué somos la mejor opción.</p>
+            </div>
+            <!-- Carrusel Swiper -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <!-- Testimonio 1 -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-card animate">
+                            <div class="testimonial-quote"><i class="fas fa-quote-right"></i></div>
+                            <div class="testimonial-tag">5 meses con nosotros</div>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">Increíble servicio. La calidad de los canales es excelente y me veo todos los partidos.</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
+                                <div class="testimonial-info">
+                                    <h4>Martín Rodríguez</h4>
+                                    <p>Buenos Aires, Argentina</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonio 2 -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-card animate">
+                            <div class="testimonial-quote"><i class="fas fa-quote-right"></i></div>
+                            <div class="testimonial-tag">10 meses con nosotros</div>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p class="testimonial-text">La aplicación funciona perfectamente en mi TV y en mi celular, el soporte un 1o.</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
+                                <div class="testimonial-info">
+                                    <h4>Laura Gómez</h4>
+                                    <p>Córdoba, Argentina</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonio 3 -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-card animate">
+                            <div class="testimonial-quote"><i class="fas fa-quote-right"></i></div>
+                            <div class="testimonial-tag">2 años con nosotros</div>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">Todo ok con la app, conparto la cuenta con mi familia, voy a seguir renovando.</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
+                                <div class="testimonial-info">
+                                    <h4>Fernando Pérez</h4>
+                                    <p>Rosario, Argentina</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonio 4 -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-card animate">
+                            <div class="testimonial-quote"><i class="fas fa-quote-right"></i></div>
+                            <div class="testimonial-tag">3 años con nosotros</div>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">La interfaz es intuitiva y es de las mejores app a un costo bajo, calidad muy buena.</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
+                                <div class="testimonial-info">
+                                    <h4>Cecilia Martínez</h4>
+                                    <p>Mar del Plata, Argentina</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonio 5 -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-card animate">
+                            <div class="testimonial-quote"><i class="fas fa-quote-right"></i></div>
+                            <div class="testimonial-tag">1 meses con nosotros</div>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <i class="fas fa-star-o"></i>
+                            </div>
+                            <p class="testimonial-text">Recién me uní y la verdad me gusto mucho, yo miro C5N y futboll pero tiene muchos canales.</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
+                                <div class="testimonial-info">
+                                    <h4>Diego López</h4>
+                                    <p>Salta, Argentina</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonio 6 -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-card animate">
+                            <div class="testimonial-quote"><i class="fas fa-quote-right"></i></div>
+                            <div class="testimonial-tag">1 año con nosotros</div>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">Todo funciona de maravilla, buenos canales, la seleccion de peliculas no las utilizo tanto.</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
+                                <div class="testimonial-info">
+                                    <h4>Mariana Ruiz</h4>
+                                    <p>Mendoza, Argentina</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonio 7 -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-card animate">
+                            <div class="testimonial-quote"><i class="fas fa-quote-right"></i></div>
+                            <div class="testimonial-tag">3 años con nosotros</div>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">Me lo recomendo un amigo del laburo, ya llevo bastante utilizando el servicio</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
+                                <div class="testimonial-info">
+                                    <h4>Sofía Herrera</h4>
+                                    <p>La Plata, Argentina</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonio 8 -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-card animate">
+                            <div class="testimonial-quote"><i class="fas fa-quote-right"></i></div>
+                            <div class="testimonial-tag">6 meses con nosotros</div>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">Mejor que Telecentro o Cablevision, y no te matan con el precio, lo recomiendo </p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
+                                <div class="testimonial-info">
+                                    <h4>Andrés Silva</h4>
+                                    <p>San Juan, Argentina</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonio 9 -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-card animate">
+                            <div class="testimonial-quote"><i class="fas fa-quote-right"></i></div>
+                            <div class="testimonial-tag">3 meses con nosotros</div>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p class="testimonial-text">Me gusta, lo tengo funcionandoen la TV del living y en 2 dormitorios</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
+                                <div class="testimonial-info">
+                                    <h4>Juliana Ríos</h4>
+                                    <p>Tucumán, Argentina</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Controles de navegación y paginación -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+            <!-- Botón de llamada a la acción -->
+            <div class="testimonials-cta">
+                <a href="#pricing" class="boton-obtener">
+                    <i class="fas fa-play"></i> Únete a ellos ahora
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        // Inicialización de Swiper con opciones avanzadas
+        var swiper = new Swiper('.swiper-container', {
+            loop: true,
+            slidesPerView: 'auto',
+            spaceBetween: 30,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+
+
+
+        // Animación de entrada para elementos con clase 'animate'
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            animateElements.forEach(element => observer.observe(element));
+        });
+    </script>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-block">
+                    <div class="footer-logo">
+                        <i class="fas fa-tv"></i> XTV <span class="xtv-logo-small">Studio</span>
+                    </div>
+
+                    <p>La mejor experiencia de streaming con el contenido que más te gusta, en todos tus dispositivos y sin complicaciones.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-block">
+                    <h4>Enlace Rápido</h4>
+                    <ul class="footer-links">
+                        <li><a href="#features"><i class="fas fa-chevron-right"></i> Características</a></li>
+                        <li><a href="#packs"><i class="fas fa-chevron-right"></i> Packs</a></li>
+                        <li><a href="#devices"><i class="fas fa-chevron-right"></i> Dispositivos</a></li>
+                        <li><a href="#pricing"><i class="fas fa-chevron-right"></i> Precios</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-block">
+                    <h4>Soporte</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-question-circle"></i> Preguntas Frecuentes</a></li>
+                        <li><a href="#"><i class="fas fa-file-alt"></i> Términos y Condiciones</a></li>
+                        <li><a href="#"><i class="fas fa-shield-alt"></i> Política de Privacidad</a></li>
+                        <li><a href="https://wa.me/5491124057454"><i class="fab fa-whatsapp"></i> WhatsApp: 11 2405-7454</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 XTV Studio. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Icono de WhatsApp Fijo: se utiliza el ícono de Font Awesome -->
+    <a href="https://wa.me/5491124057454" class="whatsapp-fixed" target="_blank">
+        <i class="fab fa-whatsapp" style="font-size: 50px; color: #25D366;"></i>
+    </a>
+
+    <script>
+        // Efecto de scroll para la Navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        });
+        // Animación al hacer scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            animateElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+
+</html>
