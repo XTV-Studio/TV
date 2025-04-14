@@ -51,9 +51,11 @@ body {
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1rem;
         }
         
+        
+
         
         /* ---------- Estilos Extra para Personalización ---------- */
         
@@ -233,7 +235,10 @@ html {
   z-index: 2;
   max-width: 700px;
   padding-top: 0rem; /* Así solo se desplaza el texto */
+  
 }
+
+
 
         .hero-badge {
             display: inline-block;
@@ -1028,12 +1033,19 @@ html {
             }
         }
 
-        @media (max-width: 576px) {
-            .hero {
-                padding: 6rem 0;
-                height: auto;
-                min-height: auto;
-            }
+@media (max-width: 576px) {
+  .hero {
+    min-height: 85vh; /* antes probablemente era 100vh */
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .hero-content {
+    margin-top: 0rem; /* reduce espacio vertical interno */
+  }
+}
+
+
 
             .section-title {
                 font-size: 1.8rem;
@@ -2523,8 +2535,8 @@ html {
               <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
             </svg>
           </div>
-          <h3>Tu referido/amigo /familiar paga su primer mes</h3>
-          <span class="price">$ 2.000</span>
+          <h3>Tu referido, amigo o familiar paga su primer mes</h3>
+          <span class="price">$ 3.000</span>
           <span class="price-note">Precio especial de bienvenida</span>
         </div>
         
@@ -2534,7 +2546,7 @@ html {
               <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
             </svg>
           </div>
-          <h3>Tu próximo mes de renovación te sale</h3>
+          <h3> Y para vos, el próximo mes de renovación te sale</h3>
           <span class="price">$ 2.000</span>
           <span class="price-note">¡Ahorra con cada referido!</span>
         </div>
